@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
+const mailService = require('../services/mail');
 const siteUrl = "https://www.lamayorista.com.co/";
 let siteName = "";
 const precio = [];
@@ -12,7 +13,8 @@ const fetchData = async() => {
         const result = await axios.get(siteUrl);
         return cheerio.load(result.data);
     } catch (error) {
-        console.log("error 1");
+        console.log(error)
+        mailService.sendMail("Error en extracción de datos.")
     }
 
 };
@@ -60,30 +62,38 @@ const getResults = async() => {
         var data = []
         for (let index = 0; index < 105; index++) {
             data.push({
-                name: nombres[index],
+                name: cleanData(nombres[index]),
                 type_weight: almacenamiento[index],
                 price: precio[index],
             });
 
         }
-        //Convert to an array so that we can sort the results.
         return {
             data: [...data],
-            // positions: [...positions].sort(),
-
-            // tags: [...tags],
-            // name: [...nombres],
-            // almacenamiento: [...almacenamiento],
-            // precio: [...precio],
-            // siteName,
         };
     } catch (error) {
         console.log("error 2");
-
-        // next(error);
+        console.log(error)
+        mailService.sendMail("Error en conexión a la página web.")
+            // next(error);
 
     }
 };
+
+cleanData = (data) => {
+    if (data.includes("*") || data[0] == " ") {
+        console.log("-" + data + "-");
+        let i = 0;
+        while (i < data.length) {
+            if (data[i] !== " " && data[i] !== "*") {
+                break
+            }
+            i++
+        }
+        return data.substring(i, data.length)
+    }
+    return data
+}
 
 module.exports = {
     getResults,

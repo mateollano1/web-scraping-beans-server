@@ -1,11 +1,15 @@
 const router = require('express').Router();
 const productService = require('../services/product')
 const productScraping = require('../services/productScraping')
+const mailService = require('../services/mail');
 
 router.post('/', async(req, res) => {
-
     let products = await productScraping.getResults()
-    await productService.saveProducts(products)
+    try {
+        await productService.saveProducts(products)
+    } catch (error) {
+        mailService.sendMail("Error al momento de guardar la información en base de datos.")
+    }
     res.json(products)
 })
 
