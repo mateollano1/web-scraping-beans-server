@@ -8,5 +8,6 @@ module.exports = (sequelize, type) => {
         name: type.STRING,
         type_weight: type.STRING,
         price: type.STRING,
+        date: type.STRING
     })
 }

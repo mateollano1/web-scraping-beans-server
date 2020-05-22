@@ -18,6 +18,11 @@ router.get('/', async(req, res) => {
     res.json(products)
 })
 
+router.get('/:name/:date', async(req, res) => {
+    let products = await productService.getproductByNameAndDate(req.params.name, req.params.date)
+    res.json(products)
+})
+
 router.get('/:name', async(req, res) => {
     let products = await productService.getProductByName(req.params.name)
     res.json(products)

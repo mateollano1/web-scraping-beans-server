@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 
 app.listen(3000, () => {
     console.log(`¡Aplicación escuchando en el puerto 3000!`)
-    cron.schedule("30 20 * * *", () => {
+    cron.schedule("30 16 * * *", () => {
         console.log('Recogiendo datos');
         cronService.saveCronScraping()
     }, {
