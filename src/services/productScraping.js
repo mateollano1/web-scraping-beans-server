@@ -61,7 +61,7 @@ const getResults = async() => {
         });
         var data = []
         currentDate = new Date()
-        currentDateFormat = currentDate.getFullYear() + "-" + currentDate.getMonth() + 1 + "-" + currentDate.getDate()
+        currentDateFormat = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate()
         for (let index = 0; index < 105; index++) {
             data.push({
                 name: cleanData(nombres[index]),
