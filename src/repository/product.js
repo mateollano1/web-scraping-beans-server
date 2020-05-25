@@ -3,8 +3,8 @@ const productModel = require('../models/product')
 const mailService = require('../services/mail');
 
 const sequelize = new Sequelize('productos', 'root', 'root', {
-    // host: 'mysql',
-    host: 'localhost',
+    host: 'mysql',
+    // host: 'localhost',
     dialect: 'mysql',
     pool: {
         max: 80,
